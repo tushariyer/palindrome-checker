@@ -1,0 +1,103 @@
+<!--This page was created by Tushar Iyer-->
+<!--CS 275 - Assignment 5 - Palindromes-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Let's Check Palindromes - Tushar Iyer</title>
+
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <!--Div which contains the form-->
+    <div id="container">
+
+        <!--Form which contains the inputs-->
+        <form id="pali" name="drome">
+            <p>
+                Enter Phrase/Word to check:
+                <!--Text/Phrase Input -->
+                <input id="tappy" type="text" name="scanner" size="40">
+            </p>
+            <br>
+            <br>
+            <!--Submit button-->
+            <input id="clicky" type="button" name="check" value="Click to Check!" onclick="letsCheck();">
+            <br>
+            <br>
+            <br>
+            <!--This label will update with the reversed string upon clicking submit-->
+            <p>
+                Reversal of Word or Phrase:
+                <label id="switched"></label>
+            </p>
+        </form>
+    </div>
+
+    <!--This is a custom footer which I attach to all my web-design work-->
+    <div id="feet">
+        <footer>
+            <h6 id="footercompany">
+                <span class="toUpper">T.I. D</span>esign &copy; 2015. All Rights Reserved. |
+                <a href="ToS.html">Terms of Use</a> |
+                <a href="privpol.html">Privacy Policy</a> |
+                <a href="sitefeedback.html">Site Feedback</a> |
+                <a href="map.html">SiteMap</a> |
+                <a href="sitelog.html">SiteLog</a>
+            </h6>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+        //Using Strict Mode
+        "use strict";
+
+        //Function letsCheck is the main function. It calls the various functions to determine a perfect/standard/false palindrome
+        function letsCheck() {
+            //Statement typed by user.
+            var statement = document.drome.scanner.value;
+
+            //This prints the reversal on the page so the user can see the reversed string (Without switching cases or removing punctuation).
+            document.getElementById("switched").innerHTML = getReversal(statement);
+
+            /*Main IF -> Runs through the conditions for standard, then perfect palindromes. Failure to meet the standard requirements will result in it not                    
+            being a palindrome.*/
+            
+            alert(!isStandard(statement) ? "The statement is not a palindrome." :
+                isPerfect(statement) ? "This is a perfect palindrome." :
+                "This is a standard palindrome.");
+
+
+        }
+
+        /*isStandard is the function which checks if the phrase is a palindrome. It uses a RegEx and it checks only to see if the phrase altogether is a                    
+        palindrome. There is another function which will tell us if the phrase meets the conditions of a 'perfect' palindrome.*/
+        function isStandard(phrase) {
+            //take the phrase (change all text to lowercase) and use the RegEx to replace
+            phrase = phrase.toLowerCase().replace(/[^a-z]+/g, "");
+            //return the boolean result of whether the phrase is equal to the reversed version of itself.
+            return (phrase === getReversal(phrase));
+        }
+
+        /*isPerfect is a function which will only be called if the phrase is a palindrome. It checks to see if the phrase/text meets the requirements of being              
+        called a 'perfect' palindrome.*/
+        function isPerfect(phrase) {
+            var regExPunc = /^[.,-\/#!$%\^&\*;:{}=\-_`~()]\s$/g;
+            var containsChar = regExPunc.test(phrase);
+            /*if the phrase entered is perfect, then it will be equal to the exact reversal of itself (Including cases, etc.). If it has spaces or punctuation,                 
+            or a difference in sequencing [due to the arrays], it will return false since those characters will not be in the same place after reversal.*/
+            return ((phrase === getReversal(phrase)) && (containsChar !== true)) ? true : false;
+        }
+
+        //getReversal is a get function which returns the reverse of the text/phrase entered by the user as a string. It uses the array class' .reverse() method.
+        function getReversal(phrase) {
+            //split the text by character and reverse the order. Rejoin and return the string.
+            return (phrase.split("").reverse().join(""));
+        }
+    </script>
+</body>
+
+</html>
